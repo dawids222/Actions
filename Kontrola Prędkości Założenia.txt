@@ -1,0 +1,61 @@
+Nazwa: HOLDER..
+
+
+Założenia funkcjonalne:
+-aplikacja wyświetla z jaką aktualnie prędkością się poruszamy
+-aplikacja wyświetla z jaką maksymalną prędkością możemy sie poruszać (powinniśmy uwzględnić, że prędkość może zależeć od godziny)
+-wyświetla nazwę ulicy
+-zbieranie statystyk (ile przejechane, ile dobrze, ile za szybko (wizualizacja na kole z buźkami?), ile wynosi największe przekroczenie, ...)
+-wszystkie widoki powinny być aktualizowane w trakcie działania (jeśli jedziemy i jesteśmy w statystykach, to widzimy jak się zmieniają. Jeśli w głównym to widzimy prędkość itd..)
+
+-użytkownik ustawia limit, po którym włączy się alarm prędkości
+-użytkownik ustala wartośc co ile alarm ma buć głośniejszy/zwiększa częstotliwość
+
+-aplikacja powinna działać również przy wyłączonym ekranie (działanie w tle)
+
+
+Założenia technologiczne:
+-pokonaną odległość mierzymy na podstawie odczytów z GPS (i tak ich potrzebujemy do pobierania maxspeed z api)
+-pobieramy maxspeed z zewnętrznego api
+-czy coś pracującego w tle może aktualizować UI?
+-musi być non stop włączona lokalizacja... (trzeba to jakoś sprawdzać na bieżąco...)
+-dane trwałe trzymać w sharedpref, plikach, czy bazie?
+
+
+
+Do przetestowania
+-serwis działający nawet po wyłączeniu ekranu
+-komunikacja serwis -> presenter -> widok (podpinanie różnych widoków)
+-obliczanie prędkości
+-korzystanie z GPSa
+-sprawdzenie użyteczności API overpass
+
+
+
+
+
+
+
+
+POZYCJE:
+19.334629,
+49.855835,
+19.334685,
+49.855873
+
+WARTOŚĆ DODANA DO LOKALIZACJI:
+49,855854 : +/- 0.00002
+
+
+ZAPYTANIE NOWE POST
+https://lz4.overpass-api.de/api/interpreter
+
+<query type="way">
+  <bbox-query s="49.855835" n="49.855873" w="19.334629" e="19.334685"/>
+  <has-kv k="maxspeed" v=""/>
+</query>
+<print mode="tags"/>
+
+
+ZAPYTANIE STARE GET
+www.overpass-api.de/api/xapi?*[maxspeed=*][bbox=19.335052,49.854836,19.335326,49.854970]
