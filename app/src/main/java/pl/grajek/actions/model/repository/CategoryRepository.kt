@@ -30,7 +30,7 @@ class CategoryRepository(application: Application) {
         DeleteCategoryAsyncTask(categoryDao).execute(category)
     }
 
-    fun selectAll(): LiveData<MutableList<Category>> {
+    fun select(): LiveData<MutableList<Category>> {
         return categories
     }
 

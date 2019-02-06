@@ -5,12 +5,12 @@ import android.arch.persistence.room.PrimaryKey
 import java.util.*
 
 @Entity(tableName = "action_table")
-class Action(
+data class Action(
     @PrimaryKey(autoGenerate = true) var id: Long?,
-    var date: Long, //todo: convert to string?
+    var date: Date,
     var quantity: Double,
     var categoryId: Int
 ) {
 
-    constructor() : this(null, Date().time, 0.0, -1)
+    constructor() : this(null, Date(), 0.0, -1)
 }

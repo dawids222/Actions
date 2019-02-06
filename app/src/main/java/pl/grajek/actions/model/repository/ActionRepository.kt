@@ -6,16 +6,15 @@ import android.os.AsyncTask
 import pl.grajek.actions.model.dao.ActionDao
 import pl.grajek.actions.model.database.AppDatabase
 import pl.grajek.actions.model.entity.Action
+import java.util.*
 
 class ActionRepository(application: Application) {
 
     private val actionDao: ActionDao
-    private val actions: LiveData<MutableList<Action>>
 
     init {
         val database = AppDatabase.getInstance(application)
         actionDao = database.actionDao()
-        actions = actionDao.selectAll()
     }
 
     fun insert(action: Action) {
@@ -30,8 +29,16 @@ class ActionRepository(application: Application) {
         DeleteActionAsyncTask(actionDao).execute(action)
     }
 
-    fun selectAll(): LiveData<MutableList<Action>> {
-        return actions
+    fun select(): LiveData<MutableList<Action>> {
+        return actionDao.select()
+    }
+
+    fun select(from: Date, to: Date): LiveData<MutableList<Action>> {
+        return actionDao.select(from, to)
+    }
+
+    fun select(categoryId: Long): LiveData<MutableList<Action>> {
+        return actionDao.select(categoryId)
     }
 
     companion object {

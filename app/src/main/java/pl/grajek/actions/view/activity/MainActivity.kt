@@ -1,10 +1,8 @@
 package pl.grajek.actions.view.activity
 
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.design.widget.NavigationView
-import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -13,7 +11,6 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import pl.grajek.actions.R
-import pl.grajek.actions.model.entity.Action
 import pl.grajek.actions.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -26,11 +23,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
-            //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
-//            mainViewModel.iterator.value = mainViewModel.iterator.value!! + 1
-            val action = Action()
-            mainViewModel.actionRepository.insert(action)
+            // todo: floating button click handling (probably through binding)
         }
 
         val toggle = ActionBarDrawerToggle(
@@ -44,14 +37,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nav_view.setNavigationItemSelectedListener(this)
 
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-
-        mainViewModel.actionRepository.selectAll().observe(this, Observer {
-            Snackbar.make(
-                mainLayout,
-                mainViewModel.actionRepository.selectAll().value!!.count().toString(),
-                Snackbar.LENGTH_SHORT
-            ).show()
-        })
     }
 
     override fun onBackPressed() {

@@ -4,10 +4,10 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 
 @Entity(tableName = "category_table")
-class Category(
+data class Category(
     @PrimaryKey(autoGenerate = true) var id: Long?,
-    name: String,
-    unit: String
+    var name: String,
+    var unit: String
 ) {
 
     constructor() : this(null, "", "")
