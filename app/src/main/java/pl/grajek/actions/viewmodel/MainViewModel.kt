@@ -3,6 +3,8 @@ package pl.grajek.actions.viewmodel
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
+import pl.grajek.actions.model.SingleLiveEvent
+import pl.grajek.actions.model.dto.ActivityStartModel
 import pl.grajek.actions.model.entity.Action
 import pl.grajek.actions.model.entity.Category
 import pl.grajek.actions.model.repository.ActionRepository
@@ -13,6 +15,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val actionRepository = ActionRepository(application)
     private val categoryRepository = CategoryRepository(application)
+
+    val activityToStart = SingleLiveEvent<ActivityStartModel>()
 
 
     fun insert(category: Category) = categoryRepository.insert(category)

@@ -6,4 +6,8 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_category">CategoryActivity</string>
+    <string name="category_name_hint">name</string>
+    <string name="category_unit_hint">unit</string>
+    <string name="category_not_valid_error">Input is invalid...</string>
 </resources>

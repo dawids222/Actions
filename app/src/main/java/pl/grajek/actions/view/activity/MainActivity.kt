@@ -1,6 +1,8 @@
 package pl.grajek.actions.view.activity
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
@@ -11,6 +13,7 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import pl.grajek.actions.R
+import pl.grajek.actions.model.dto.ActivityStartModel
 import pl.grajek.actions.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -22,8 +25,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            // todo: floating button click handling (probably through binding)
+        fab.setOnClickListener {
+            mainViewModel.activityToStart?.value = ActivityStartModel(CategoryActivity::class.java, Bundle())
         }
 
         val toggle = ActionBarDrawerToggle(
@@ -37,6 +40,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nav_view.setNavigationItemSelectedListener(this)
 
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+
+        setObservers()
+    }
+
+    private fun setObservers() {
+        mainViewModel.activityToStart.observe(this, Observer {
+            if (it != null) {
+                val intent = Intent(this, it.type)
+                intent.putExtras(it.bundle)
+                startActivity(intent)
+            }
+        })
     }
 
     override fun onBackPressed() {
