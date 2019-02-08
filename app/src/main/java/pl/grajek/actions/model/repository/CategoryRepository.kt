@@ -30,6 +30,10 @@ class CategoryRepository(application: Application) {
         DeleteCategoryAsyncTask(categoryDao).execute(category)
     }
 
+    fun delete(id: Long) {
+        DeleteCategoryByIdAsyncTask(categoryDao).execute(id)
+    }
+
     fun select(): LiveData<MutableList<Category>> {
         return categories
     }
@@ -48,6 +52,13 @@ class CategoryRepository(application: Application) {
 
     private class DeleteCategoryAsyncTask(val categoryDao: CategoryDao) : AsyncTask<Category, Unit, Unit>() {
         override fun doInBackground(vararg params: Category?) {
+            categoryDao.delete(params[0]!!)
+        }
+    }
+
+    private class DeleteCategoryByIdAsyncTask(val categoryDao: CategoryDao) :
+        AsyncTask<Long, Unit, Unit>() {
+        override fun doInBackground(vararg params: Long?) {
             categoryDao.delete(params[0]!!)
         }
     }

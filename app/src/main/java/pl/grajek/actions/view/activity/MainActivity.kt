@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.content_main.*
 import pl.grajek.actions.R
 import pl.grajek.actions.databinding.ActivityMainBinding
 import pl.grajek.actions.model.dto.ActivityStartModel
+import pl.grajek.actions.model.entity.Category
 import pl.grajek.actions.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -64,6 +65,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val newTab = tabs.newTab()
                 newTab.let { tab ->
                     tab.text = category.name
+                    tab.tag = category
                 }
                 tabs.addTab(newTab)
             }
@@ -85,13 +87,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
+        when (item.itemId) {
+            R.id.action_delete_category -> {
+                val selectedTab = tabs.getTabAt(tabs.selectedTabPosition)
+                if (selectedTab != null) {
+                    val categoryToDelete = selectedTab.tag as Category
+                    mainViewModel.delete(categoryToDelete)
+                }
+            }
+            else -> return super.onOptionsItemSelected(item)
         }
+
+        return true
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

@@ -10,4 +10,5 @@
     <string name="category_name_hint">name</string>
     <string name="category_unit_hint">unit</string>
     <string name="category_not_valid_error">Input is invalid...</string>
+    <string name="delete_category_action">Delete category</string>
 </resources>

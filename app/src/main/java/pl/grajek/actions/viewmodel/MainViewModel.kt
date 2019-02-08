@@ -30,7 +30,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun insert(category: Category) = categoryRepository.insert(category)
     fun update(category: Category) = categoryRepository.update(category)
-    fun dalete(category: Category) = categoryRepository.delete(category)
+    fun delete(category: Category) = categoryRepository.delete(category)
+    fun delete(id: Long) = categoryRepository.delete(id)
     fun selectCategories(): LiveData<MutableList<Category>> = categoryRepository.select()
 
     fun insert(action: Action) = actionRepository.insert(action)

@@ -16,6 +16,9 @@ interface CategoryDao {
     @Delete
     fun delete(category: Category)
 
+    @Query("DELETE FROM category_table WHERE id = :id")
+    fun delete(id: Long)
+
     @Query("SELECT * FROM category_table")
     fun selectAll(): LiveData<MutableList<Category>>
 }
