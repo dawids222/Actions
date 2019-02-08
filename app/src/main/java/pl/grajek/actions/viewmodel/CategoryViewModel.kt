@@ -25,6 +25,7 @@ class CategoryViewModel(application: Application) : AndroidViewModel(application
 
     fun confirm() {
         if (validate()) {
+            addNewCategory()
             goBack.value = true
         } else {
             errorMessage.value = R.string.category_not_valid_error
@@ -39,5 +40,18 @@ class CategoryViewModel(application: Application) : AndroidViewModel(application
             (name.isNotEmpty() && unit.isNotEmpty())
         else
             false
+    }
+
+    private fun addNewCategory() {
+        val name = this.name.value
+        val unit = this.unit.value
+
+        val newCategory = Category()
+        newCategory.let {
+            it.name = name!!
+            it.unit = unit!!
+        }
+
+        insert(newCategory)
     }
 }

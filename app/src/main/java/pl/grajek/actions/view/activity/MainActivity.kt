@@ -3,6 +3,7 @@ package pl.grajek.actions.view.activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
@@ -12,7 +13,9 @@ import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.content_main.*
 import pl.grajek.actions.R
+import pl.grajek.actions.databinding.ActivityMainBinding
 import pl.grajek.actions.model.dto.ActivityStartModel
 import pl.grajek.actions.viewmodel.MainViewModel
 
@@ -22,11 +25,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener {
-            mainViewModel.activityToStart?.value = ActivityStartModel(CategoryActivity::class.java, Bundle())
+            mainViewModel.activityToStart.value = ActivityStartModel(CategoryActivity::class.java, Bundle())
         }
 
         val toggle = ActionBarDrawerToggle(
@@ -40,6 +43,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nav_view.setNavigationItemSelectedListener(this)
 
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        binding.vm = mainViewModel
 
         setObservers()
     }
@@ -50,6 +54,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val intent = Intent(this, it.type)
                 intent.putExtras(it.bundle)
                 startActivity(intent)
+            }
+        })
+
+        mainViewModel.selectCategories().observe(this, Observer { categories ->
+            tabs.removeAllTabs()
+
+            categories?.forEach { category ->
+                val newTab = tabs.newTab()
+                newTab.let { tab ->
+                    tab.text = category.name
+                }
+                tabs.addTab(newTab)
             }
         })
     }
