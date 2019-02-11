@@ -10,6 +10,7 @@ import pl.grajek.actions.model.entity.Action
 import pl.grajek.actions.model.entity.Category
 import pl.grajek.actions.model.repository.ActionRepository
 import pl.grajek.actions.model.repository.CategoryRepository
+import pl.grajek.actions.view.activity.ActionActivity
 import pl.grajek.actions.view.activity.CategoryActivity
 import java.util.*
 
@@ -19,12 +20,22 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val categoryRepository = CategoryRepository(application)
 
     val activityToStart = SingleLiveEvent<ActivityStartModel>()
+    var currentCategory: Category? = null
 
 
     fun gotoCategoryActivity() {
         activityToStart.value = ActivityStartModel(
             CategoryActivity::class.java,
             Bundle()
+        )
+    }
+
+    fun gotoActionActivity() {
+        val bundle = Bundle()
+        if (currentCategory != null)
+            bundle.putLong(ActionActivity.CATEGORY_ID, currentCategory!!.id!!)
+        activityToStart.value = ActivityStartModel(
+            ActionActivity::class.java, bundle
         )
     }
 

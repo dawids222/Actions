@@ -11,4 +11,7 @@
     <string name="category_unit_hint">unit</string>
     <string name="category_not_valid_error">Input is invalid...</string>
     <string name="delete_category_action">Delete category</string>
+    <string name="title_activity_action">ActionActivity</string>
+    <string name="date_hint">date</string>
+    <string name="amount_hint">amount</string>
 </resources>

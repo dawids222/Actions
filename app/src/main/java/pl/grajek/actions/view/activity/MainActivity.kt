@@ -6,6 +6,7 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.design.widget.TabLayout
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -16,9 +17,9 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import pl.grajek.actions.R
 import pl.grajek.actions.databinding.ActivityMainBinding
-import pl.grajek.actions.model.dto.ActivityStartModel
 import pl.grajek.actions.model.entity.Category
 import pl.grajek.actions.viewmodel.MainViewModel
+
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -28,10 +29,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         setSupportActionBar(toolbar)
-
-        fab.setOnClickListener {
-            mainViewModel.activityToStart.value = ActivityStartModel(CategoryActivity::class.java, Bundle())
-        }
 
         val toggle = ActionBarDrawerToggle(
             this, drawer_layout, toolbar,
@@ -46,7 +43,28 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         binding.vm = mainViewModel
 
+        setListeners()
         setObservers()
+    }
+
+    private fun setListeners() {
+        tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                mainViewModel.currentCategory = tab.tag as Category
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab) {
+
+            }
+        })
+
+        fab.setOnClickListener {
+            mainViewModel.gotoActionActivity()
+        }
     }
 
     private fun setObservers() {
