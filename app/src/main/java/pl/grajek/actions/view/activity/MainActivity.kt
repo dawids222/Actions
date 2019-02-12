@@ -56,7 +56,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val layoutManager = LinearLayoutManager(this)
         actionsRecycler.layoutManager = layoutManager
 
-        adapter = ActionAdapter()
+        adapter = ActionAdapter {
+            mainViewModel.gotoActionEditActivity(it)
+        }
 
         actionsRecycler.adapter = adapter
     }

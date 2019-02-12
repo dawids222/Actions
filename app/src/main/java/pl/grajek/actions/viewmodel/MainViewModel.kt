@@ -43,6 +43,15 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         )
     }
 
+    fun gotoActionEditActivity(action: Action) {
+        val bundle = Bundle()
+        if (currentCategory != null)
+            bundle.putSerializable(ActionActivity.ACTION, action)
+        activityToStart.value = ActivityStartModel(
+            ActionActivity::class.java, bundle
+        )
+    }
+
     fun observeActions(owner: LifecycleOwner, id: Long, observer: Observer<MutableList<Action>>) {
         currentActions?.removeObservers(owner)
         currentActions = selectActions(id)

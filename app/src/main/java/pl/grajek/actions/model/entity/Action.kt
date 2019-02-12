@@ -4,6 +4,7 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.ForeignKey.CASCADE
 import android.arch.persistence.room.PrimaryKey
+import java.io.Serializable
 import java.util.*
 
 @Entity(
@@ -20,7 +21,7 @@ data class Action(
     var date: Date,
     var quantity: Double,
     var categoryId: Long
-) {
+) : Serializable {
 
     constructor() : this(null, Date(), 0.0, -1)
 }

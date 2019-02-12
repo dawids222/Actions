@@ -17,15 +17,32 @@ class ActionViewModel(application: Application) : AndroidViewModel(application) 
     val date = MutableLiveData<String>()
     val amount = MutableLiveData<String>()
     var categoryId = -1L
+    var modifyAction: Action? = null
 
     val errorMessage = SingleLiveEvent<Int>()
     val goBack = SingleLiveEvent<Boolean>()
 
+
     fun insert(action: Action) = actionRepository.insert(action)
+    fun update(action: Action) = actionRepository.update(action)
+
+
+    fun setActionToModify(action: Action) {
+        modifyAction = action
+        date.value = pl.grajek.actions.model.Date(action.date.time).stringify
+        amount.value = action.quantity.toString()
+    }
 
     fun confirm() {
         if (validate()) {
-            addNewAction()
+            val date = this.date.value!!
+            val amount = this.amount.value?.toDouble()!!
+
+            if (modifyAction != null)
+                modifyAction(date, amount)
+            else
+                addNewAction(date, amount)
+
             goBack.value = true
         } else {
             errorMessage.value = R.string.category_not_valid_error
@@ -42,14 +59,18 @@ class ActionViewModel(application: Application) : AndroidViewModel(application) 
             false
     }
 
-    private fun addNewAction() {
-        val date = this.date.value
-        val amount = this.amount.value?.toDouble()
+    private fun modifyAction(date: String, amount: Double) {
+        modifyAction?.date = Date(dateToMilliseconds(date))
+        modifyAction?.quantity = amount
 
+        update(modifyAction!!)
+    }
+
+    private fun addNewAction(date: String, amount: Double) {
         val newAction = Action()
         newAction.let {
-            it.date = Date(dateToMilliseconds(date!!))
-            it.quantity = amount!!
+            it.date = Date(dateToMilliseconds(date))
+            it.quantity = amount
             it.categoryId = categoryId
         }
 

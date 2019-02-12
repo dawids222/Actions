@@ -12,4 +12,11 @@ class ActionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val amountTextView: AppCompatTextView = view.findViewById(R.id.amountView)
 
     var tag: Action? = null
+
+    fun setOnClickListener(onItemClick: (Action) -> Unit) {
+        itemView.setOnClickListener {
+            val action = tag as Action
+            onItemClick(action)
+        }
+    }
 }

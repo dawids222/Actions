@@ -8,7 +8,7 @@ import pl.grajek.actions.model.Date
 import pl.grajek.actions.model.entity.Action
 import pl.grajek.actions.view.holder.ActionViewHolder
 
-class ActionAdapter : RecyclerView.Adapter<ActionViewHolder>() {
+class ActionAdapter(val onItemClick: (Action) -> Unit) : RecyclerView.Adapter<ActionViewHolder>() {
 
     private var actions = mutableListOf<Action>()
 
@@ -33,5 +33,6 @@ class ActionAdapter : RecyclerView.Adapter<ActionViewHolder>() {
         holder.dateTextView.text = Date(action.date.time).stringify
         holder.amountTextView.text = action.quantity.toString()
         holder.tag = action
+        holder.setOnClickListener(onItemClick)
     }
 }

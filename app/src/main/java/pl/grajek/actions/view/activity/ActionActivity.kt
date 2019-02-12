@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.content_action.*
 import pl.grajek.actions.R
 import pl.grajek.actions.databinding.ActivityActionBinding
 import pl.grajek.actions.model.Date
+import pl.grajek.actions.model.entity.Action
 import pl.grajek.actions.viewmodel.ActionViewModel
 
 
@@ -22,6 +23,7 @@ class ActionActivity : AppCompatActivity() {
 
     companion object {
         const val CATEGORY_ID = "CATEGORY_ID"
+        const val ACTION = "ACTION"
     }
 
     lateinit var actionViewModel: ActionViewModel
@@ -47,13 +49,16 @@ class ActionActivity : AppCompatActivity() {
     }
 
     private fun handleBundle() {
-        if (intent.hasExtra(CATEGORY_ID)) {
+        if (intent.hasExtra(CATEGORY_ID)) { // Handle add action
             val categoryId = intent.getLongExtra(CATEGORY_ID, -1)
             actionViewModel.categoryId = categoryId
+        } else if (intent.hasExtra(ACTION)) { // Handle modify action
+            val action = intent.getSerializableExtra(ACTION) as Action
+            actionViewModel.setActionToModify(action)
         }
     }
 
-    fun setListeners() {
+    private fun setListeners() {
         dateInput.setOnClickListener {
             handleDateInput()
         }
