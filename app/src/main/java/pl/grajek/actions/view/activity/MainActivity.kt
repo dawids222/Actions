@@ -10,7 +10,7 @@ import android.support.design.widget.TabLayout
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
+import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
@@ -19,17 +19,21 @@ import kotlinx.android.synthetic.main.content_main.*
 import pl.grajek.actions.R
 import pl.grajek.actions.databinding.ActivityMainBinding
 import pl.grajek.actions.model.entity.Category
+import pl.grajek.actions.view.adapter.ActionAdapter
 import pl.grajek.actions.viewmodel.MainViewModel
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var mainViewModel: MainViewModel
+    private lateinit var adapter: ActionAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        setupRecyclerView()
 
         val toggle = ActionBarDrawerToggle(
             this, drawer_layout, toolbar,
@@ -48,6 +52,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setObservers()
     }
 
+    private fun setupRecyclerView() {
+        val layoutManager = LinearLayoutManager(this)
+        actionsRecycler.layoutManager = layoutManager
+
+        adapter = ActionAdapter()
+
+        actionsRecycler.adapter = adapter
+    }
+
     private fun setListeners() {
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
@@ -57,7 +70,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     this@MainActivity,
                     currentCategory.id!!,
                     Observer {
-                        it?.forEach { Log.e("TAG", it.toString()) }
+                        adapter.setActions(it!!)
                     })
             }
 

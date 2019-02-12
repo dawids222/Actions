@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.circularreveal.cardview.CircularRevealCardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/standard_padding"
+        android:layout_marginLeft="@dimen/standard_padding"
+        android:layout_marginRight="@dimen/standard_padding">
+
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/standard_padding">
+
+        <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/dateView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:text="@string/placeholder"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:lines="1"
+                android:layout_toStartOf="@id/amountView"
+                android:ellipsize="end"/>
+
+        <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/amountView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="@string/placeholder"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+
+    </RelativeLayout>
+
+</android.support.design.circularreveal.cardview.CircularRevealCardView>
