@@ -10,6 +10,7 @@ import android.support.design.widget.TabLayout
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
@@ -50,16 +51,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun setListeners() {
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                mainViewModel.currentCategory = tab.tag as Category
+                val currentCategory = tab.tag as Category
+                mainViewModel.currentCategory = currentCategory
+                mainViewModel.observeActions(
+                    this@MainActivity,
+                    currentCategory.id!!,
+                    Observer {
+                        it?.forEach { Log.e("TAG", it.toString()) }
+                    })
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab) {
-
-            }
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {}
         })
 
         fab.setOnClickListener {
@@ -78,16 +81,28 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         mainViewModel.selectCategories().observe(this, Observer { categories ->
             tabs.removeAllTabs()
-
-            categories?.forEach { category ->
-                val newTab = tabs.newTab()
-                newTab.let { tab ->
-                    tab.text = category.name
-                    tab.tag = category
-                }
-                tabs.addTab(newTab)
-            }
+            createTabs(categories)
+            manageFabVisibility(categories)
         })
+    }
+
+    private fun createTabs(categories: MutableList<Category>?) {
+        categories?.forEach { category ->
+            val newTab = tabs.newTab()
+            newTab.let { tab ->
+                tab.text = category.name
+                tab.tag = category
+            }
+            tabs.addTab(newTab)
+        }
+    }
+
+    private fun manageFabVisibility(categories: MutableList<Category>?) {
+        if (categories?.isEmpty() == true) {
+            fab.hide()
+        } else {
+            fab.show()
+        }
     }
 
     override fun onBackPressed() {

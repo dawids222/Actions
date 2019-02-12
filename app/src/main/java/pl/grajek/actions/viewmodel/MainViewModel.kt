@@ -2,7 +2,9 @@ package pl.grajek.actions.viewmodel
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
+import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.Observer
 import android.os.Bundle
 import pl.grajek.actions.model.SingleLiveEvent
 import pl.grajek.actions.model.dto.ActivityStartModel
@@ -22,6 +24,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val activityToStart = SingleLiveEvent<ActivityStartModel>()
     var currentCategory: Category? = null
 
+    private var currentActions: LiveData<MutableList<Action>>? = null
+
 
     fun gotoCategoryActivity() {
         activityToStart.value = ActivityStartModel(
@@ -37,6 +41,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         activityToStart.value = ActivityStartModel(
             ActionActivity::class.java, bundle
         )
+    }
+
+    fun observeActions(owner: LifecycleOwner, id: Long, observer: Observer<MutableList<Action>>) {
+        currentActions?.removeObservers(owner)
+        currentActions = selectActions(id)
+        currentActions?.observe(owner, observer)
     }
 
     fun insert(category: Category) = categoryRepository.insert(category)

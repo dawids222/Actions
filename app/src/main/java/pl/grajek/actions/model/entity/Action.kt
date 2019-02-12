@@ -19,7 +19,7 @@ data class Action(
     @PrimaryKey(autoGenerate = true) var id: Long?,
     var date: Date,
     var quantity: Double,
-    var categoryId: Int
+    var categoryId: Long
 ) {
 
     constructor() : this(null, Date(), 0.0, -1)
