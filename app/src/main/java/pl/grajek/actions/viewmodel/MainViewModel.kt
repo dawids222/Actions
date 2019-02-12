@@ -34,6 +34,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         )
     }
 
+    fun gotoCategoryEditActivity(category: Category) {
+        val bundle = Bundle()
+        bundle.putSerializable(CategoryActivity.CATEGORY, category)
+        activityToStart.value = ActivityStartModel(
+            CategoryActivity::class.java, bundle
+        )
+    }
+
     fun gotoActionActivity() {
         val bundle = Bundle()
         if (currentCategory != null)

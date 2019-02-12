@@ -10,10 +10,15 @@ import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_category.*
 import pl.grajek.actions.R
 import pl.grajek.actions.databinding.ActivityCategoryBinding
+import pl.grajek.actions.model.entity.Category
 import pl.grajek.actions.viewmodel.CategoryViewModel
 
 
 class CategoryActivity : AppCompatActivity() {
+
+    companion object {
+        const val CATEGORY = "CATEGORY"
+    }
 
     private lateinit var categoryViewModel: CategoryViewModel
 
@@ -27,7 +32,15 @@ class CategoryActivity : AppCompatActivity() {
         categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel::class.java)
         binding.vm = categoryViewModel
 
+        handleBundle()
         setObservers()
+    }
+
+    private fun handleBundle() {
+        if (intent.hasExtra(CATEGORY)) {
+            val category = intent.getSerializableExtra(CATEGORY) as Category
+            categoryViewModel.setCategoryToModify(category)
+        }
     }
 
     private fun setObservers() {

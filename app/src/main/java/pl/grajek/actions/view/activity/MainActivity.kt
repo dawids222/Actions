@@ -143,6 +143,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     mainViewModel.delete(categoryToDelete)
                 }
             }
+            R.id.action_modify_category -> {
+                val selectedTab = tabs.getTabAt(tabs.selectedTabPosition)
+                if (selectedTab != null) {
+                    val categoryToModify = selectedTab.tag as Category
+                    mainViewModel.gotoCategoryEditActivity(categoryToModify)
+                }
+            }
             else -> return super.onOptionsItemSelected(item)
         }
 

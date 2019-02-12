@@ -15,4 +15,5 @@
     <string name="date_hint">date</string>
     <string name="amount_hint">amount</string>
     <string name="placeholder">placeholder</string>
+    <string name="modify_category_action">Modify category</string>
 </resources>
