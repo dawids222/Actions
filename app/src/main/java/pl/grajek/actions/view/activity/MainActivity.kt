@@ -6,7 +6,9 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.design.widget.Snackbar
 import android.support.design.widget.TabLayout
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -56,9 +58,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val layoutManager = LinearLayoutManager(this)
         actionsRecycler.layoutManager = layoutManager
 
-        adapter = ActionAdapter {
+        adapter = ActionAdapter({
             mainViewModel.gotoActionEditActivity(it)
-        }
+        }, {
+            mainViewModel.delete(it)
+        })
 
         actionsRecycler.adapter = adapter
     }
@@ -95,9 +99,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         })
 
         mainViewModel.selectCategories().observe(this, Observer { categories ->
+            if (categories?.isEmpty() == true)
+                mainViewModel.currentCategory = null
+
             tabs.removeAllTabs()
             createTabs(categories)
             manageFabVisibility(categories)
+        })
+
+        mainViewModel.errorMessage.observe(this, Observer {
+            val snackbar = Snackbar.make(drawer_layout, it!!, Snackbar.LENGTH_SHORT)
+            val snackbarView = snackbar.view
+            snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorError))
+            snackbar.show()
         })
     }
 
@@ -149,6 +163,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     val categoryToModify = selectedTab.tag as Category
                     mainViewModel.gotoCategoryEditActivity(categoryToModify)
                 }
+            }
+            R.id.action_show_graph -> {
+                mainViewModel.gotoGraphActivity()
             }
             else -> return super.onOptionsItemSelected(item)
         }

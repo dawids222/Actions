@@ -6,6 +6,7 @@ import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Observer
 import android.os.Bundle
+import pl.grajek.actions.R
 import pl.grajek.actions.model.SingleLiveEvent
 import pl.grajek.actions.model.dto.ActivityStartModel
 import pl.grajek.actions.model.entity.Action
@@ -14,6 +15,7 @@ import pl.grajek.actions.model.repository.ActionRepository
 import pl.grajek.actions.model.repository.CategoryRepository
 import pl.grajek.actions.view.activity.ActionActivity
 import pl.grajek.actions.view.activity.CategoryActivity
+import pl.grajek.actions.view.activity.GraphActivity
 import java.util.*
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
@@ -23,6 +25,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     val activityToStart = SingleLiveEvent<ActivityStartModel>()
     var currentCategory: Category? = null
+
+    val errorMessage = SingleLiveEvent<Int>()
 
     private var currentActions: LiveData<MutableList<Action>>? = null
 
@@ -60,6 +64,18 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         )
     }
 
+    fun gotoGraphActivity() {
+        if (currentCategory != null && currentActions?.value?.isNotEmpty() == true) {
+            val bundle = Bundle()
+            bundle.putLong(GraphActivity.CATEGORY_ID, currentCategory?.id!!)
+            activityToStart.value = ActivityStartModel(
+                GraphActivity::class.java, bundle
+            )
+        } else {
+            errorMessage.value = R.string.category_null_or_empty
+        }
+    }
+
     fun observeActions(owner: LifecycleOwner, id: Long, observer: Observer<MutableList<Action>>) {
         currentActions?.removeObservers(owner)
         currentActions = selectActions(id)
@@ -74,7 +90,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun insert(action: Action) = actionRepository.insert(action)
     fun update(action: Action) = actionRepository.update(action)
-    fun dalete(action: Action) = actionRepository.delete(action)
+    fun delete(action: Action) = actionRepository.delete(action)
     fun selectActions(): LiveData<MutableList<Action>> = actionRepository.select()
     fun selectActions(categoryId: Long): LiveData<MutableList<Action>> = actionRepository.select(categoryId)
     fun selectActions(from: Date, to: Date): LiveData<MutableList<Action>> = actionRepository.select(from, to)

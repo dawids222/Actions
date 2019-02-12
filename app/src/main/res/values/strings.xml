@@ -16,4 +16,6 @@
     <string name="amount_hint">amount</string>
     <string name="placeholder">placeholder</string>
     <string name="modify_category_action">Modify category</string>
+    <string name="show_graph">Show graph</string>
+    <string name="category_null_or_empty">Category is not selected or empty</string>
 </resources>

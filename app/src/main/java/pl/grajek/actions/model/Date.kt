@@ -1,6 +1,6 @@
 package pl.grajek.actions.model
 
-import java.text.SimpleDateFormat
+import pl.grajek.actions.util.sdf
 import java.util.Date
 
 class Date(milliseconds: Long) {
@@ -13,7 +13,6 @@ class Date(milliseconds: Long) {
 
     init {
         longify = milliseconds
-        val sdf = SimpleDateFormat("dd/MM/yyyy")
         stringify = sdf.format(Date(milliseconds)).toString()
         val date = stringify.split('/')
         year = date[2].toInt()

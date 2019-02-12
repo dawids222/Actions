@@ -17,12 +17,12 @@ interface ActionDao {
     @Delete
     fun delete(action: Action)
 
-    @Query("SELECT * FROM action_table")
+    @Query("SELECT * FROM action_table ORDER BY date")
     fun select(): LiveData<MutableList<Action>>
 
-    @Query("SELECT * FROM action_table WHERE date BETWEEN :from AND :to")
+    @Query("SELECT * FROM action_table WHERE date BETWEEN :from AND :to ORDER BY date")
     fun select(from: Date, to: Date): LiveData<MutableList<Action>>
 
-    @Query("SELECT * FROM action_table WHERE categoryId = :categoryId")
+    @Query("SELECT * FROM action_table WHERE categoryId = :categoryId ORDER BY date")
     fun select(categoryId: Long): LiveData<MutableList<Action>>
 }
