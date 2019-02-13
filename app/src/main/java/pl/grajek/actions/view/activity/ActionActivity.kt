@@ -26,7 +26,7 @@ class ActionActivity : AppCompatActivity() {
         const val ACTION = "ACTION"
     }
 
-    lateinit var actionViewModel: ActionViewModel
+    private lateinit var actionViewModel: ActionViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
