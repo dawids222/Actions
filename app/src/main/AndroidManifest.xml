@@ -11,17 +11,17 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".view.activity.GraphActivity">
+        <activity
+                android:name=".view.activity.GraphActivity"
+                android:label="@string/title_activity_graph">
         </activity>
         <activity
                 android:name=".view.activity.ActionActivity"
-                android:label="@string/title_activity_action"
-                android:theme="@style/AppTheme.NoActionBar">
+                android:label="@string/title_activity_action">
         </activity>
         <activity
                 android:name=".view.activity.CategoryActivity"
-                android:label="@string/title_activity_category"
-                android:theme="@style/AppTheme.NoActionBar">
+                android:label="@string/title_activity_category">
         </activity>
         <activity
                 android:name=".view.activity.MainActivity"

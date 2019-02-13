@@ -26,6 +26,8 @@ class GraphActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil.setContentView<ActivityGraphBinding>(this, R.layout.activity_graph)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         graphViewModel = ViewModelProviders.of(this).get(GraphViewModel::class.java)
         binding.vm = graphViewModel
 

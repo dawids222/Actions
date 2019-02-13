@@ -26,7 +26,6 @@ class CategoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil.setContentView<ActivityCategoryBinding>(this, R.layout.activity_category)
 
-        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel::class.java)
