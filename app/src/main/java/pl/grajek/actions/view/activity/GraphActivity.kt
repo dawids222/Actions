@@ -9,18 +9,19 @@ import kotlinx.android.synthetic.main.activity_graph.*
 import pl.grajek.actions.R
 import pl.grajek.actions.databinding.ActivityGraphBinding
 import pl.grajek.actions.model.ChartDrawer
+import pl.grajek.actions.model.entity.Category
 import pl.grajek.actions.viewmodel.GraphViewModel
 
 
 class GraphActivity : AppCompatActivity() {
 
     companion object {
-        const val CATEGORY_ID = "CATEGORY_ID"
+        const val CATEGORY = "CATEGORY"
     }
 
     private lateinit var graphViewModel: GraphViewModel
     private lateinit var chartDrawer: ChartDrawer
-    private var categoryId = -1L
+    private lateinit var category: Category
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,18 +35,29 @@ class GraphActivity : AppCompatActivity() {
         chartDrawer = ChartDrawer(chart, this)
 
         handleBundle()
+        setTitle()
         setObservers()
     }
 
     private fun handleBundle() {
-        if (intent.hasExtra(CATEGORY_ID)) {
-            categoryId = intent.getLongExtra(CATEGORY_ID, -1)
+        if (intent.hasExtra(CATEGORY)) {
+            category = intent.getSerializableExtra(CATEGORY) as Category
         }
     }
 
+    private fun setTitle() {
+        title = category.name
+    }
+
     private fun setObservers() {
-        graphViewModel.select(categoryId).observe(this, Observer {
+        graphViewModel.select(category.id!!).observe(this, Observer {
             chartDrawer.draw(it!!)
         })
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
 }

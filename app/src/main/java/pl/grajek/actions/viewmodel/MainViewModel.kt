@@ -67,7 +67,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun gotoGraphActivity() {
         if (currentCategory != null && currentActions?.value?.isNotEmpty() == true) {
             val bundle = Bundle()
-            bundle.putLong(GraphActivity.CATEGORY_ID, currentCategory?.id!!)
+            bundle.putSerializable(GraphActivity.CATEGORY, currentCategory)
             activityToStart.value = ActivityStartModel(
                 GraphActivity::class.java, bundle
             )
