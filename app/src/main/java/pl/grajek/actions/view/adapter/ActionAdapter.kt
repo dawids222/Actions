@@ -9,15 +9,17 @@ import pl.grajek.actions.model.entity.Action
 import pl.grajek.actions.view.holder.ActionViewHolder
 
 class ActionAdapter(
-    val onItemClick: (Action) -> Unit,
+    private val onItemClick: (Action) -> Unit,
     val onRemoveButtonClick: (Action) -> Unit
 ) : RecyclerView.Adapter<ActionViewHolder>() {
 
     private var actions = mutableListOf<Action>()
+    private var recyclerView: RecyclerView? = null
 
     fun setActions(actions: MutableList<Action>) {
         this.actions = actions
         notifyDataSetChanged()
+        recyclerView?.scheduleLayoutAnimation()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActionViewHolder {
@@ -40,5 +42,15 @@ class ActionAdapter(
         holder.removeButton.setOnClickListener {
             onRemoveButtonClick(holder.tag as Action)
         }
+    }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        this.recyclerView = recyclerView
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        this.recyclerView = null
     }
 }
