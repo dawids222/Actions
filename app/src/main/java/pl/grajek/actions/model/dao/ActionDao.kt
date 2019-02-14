@@ -25,4 +25,7 @@ interface ActionDao {
 
     @Query("SELECT * FROM action_table WHERE categoryId = :categoryId ORDER BY date")
     fun select(categoryId: Long): LiveData<MutableList<Action>>
+
+    @Query("SELECT * FROM action_table WHERE categoryId = :categoryId ORDER BY date DESC")
+    fun selectDesc(categoryId: Long): LiveData<MutableList<Action>>
 }

@@ -41,6 +41,10 @@ class ActionRepository(application: Application) {
         return actionDao.select(categoryId)
     }
 
+    fun selectDesc(categoryId: Long): LiveData<MutableList<Action>> {
+        return actionDao.selectDesc(categoryId)
+    }
+
     companion object {
         private class InsertActionAsyncTask(val actionDao: ActionDao) : AsyncTask<Action, Unit, Unit>() {
             override fun doInBackground(vararg params: Action?) {

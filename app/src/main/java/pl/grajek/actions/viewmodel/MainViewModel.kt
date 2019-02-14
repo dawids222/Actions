@@ -16,7 +16,6 @@ import pl.grajek.actions.model.repository.CategoryRepository
 import pl.grajek.actions.view.activity.ActionActivity
 import pl.grajek.actions.view.activity.CategoryActivity
 import pl.grajek.actions.view.activity.GraphActivity
-import java.util.*
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -91,7 +90,5 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun insert(action: Action) = actionRepository.insert(action)
     fun update(action: Action) = actionRepository.update(action)
     fun delete(action: Action) = actionRepository.delete(action)
-    fun selectActions(): LiveData<MutableList<Action>> = actionRepository.select()
-    fun selectActions(categoryId: Long): LiveData<MutableList<Action>> = actionRepository.select(categoryId)
-    fun selectActions(from: Date, to: Date): LiveData<MutableList<Action>> = actionRepository.select(from, to)
+    private fun selectActions(categoryId: Long): LiveData<MutableList<Action>> = actionRepository.selectDesc(categoryId)
 }
