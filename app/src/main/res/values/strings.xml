@@ -19,4 +19,10 @@
     <string name="show_graph">Show graph</string>
     <string name="category_null_or_empty">Category is not selected or empty</string>
     <string name="title_activity_graph">GraphActivity</string>
+    <string name="category_delete_title">Deleting category</string>
+    <string name="category_delete_message">Selected category will be removed permanently</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">CANCEL</string>
+    <string name="action_delete_title">Deleting action</string>
+    <string name="action_delete_message">Selected Action will be removed permanently</string>
 </resources>

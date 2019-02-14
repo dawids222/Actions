@@ -20,8 +20,10 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import pl.grajek.actions.R
 import pl.grajek.actions.databinding.ActivityMainBinding
+import pl.grajek.actions.model.entity.Action
 import pl.grajek.actions.model.entity.Category
 import pl.grajek.actions.view.adapter.ActionAdapter
+import pl.grajek.actions.view.dialog.DialogCreator
 import pl.grajek.actions.viewmodel.MainViewModel
 
 
@@ -29,6 +31,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private lateinit var mainViewModel: MainViewModel
     private lateinit var adapter: ActionAdapter
+    private val dialogCreator = DialogCreator(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +64,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         adapter = ActionAdapter({
             mainViewModel.gotoActionEditActivity(it)
         }, {
-            mainViewModel.delete(it)
+            showDeleteActionDialog(it)
         })
 
         actionsRecycler.adapter = adapter
@@ -153,8 +156,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.action_delete_category -> {
                 val selectedTab = tabs.getTabAt(tabs.selectedTabPosition)
                 if (selectedTab != null) {
-                    val categoryToDelete = selectedTab.tag as Category
-                    mainViewModel.delete(categoryToDelete)
+                    val category = selectedTab.tag as Category
+                    showDeleteCategoryDialog(category)
                 }
             }
             R.id.action_modify_category -> {
@@ -171,6 +174,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         return true
+    }
+
+    private fun showDeleteCategoryDialog(category: Category) {
+        val dialog = dialogCreator.create(R.string.category_delete_title,
+            R.string.category_delete_message,
+            true, R.string.dialog_ok, {
+                mainViewModel.delete(category)
+            },
+            R.string.dialog_cancel, {})
+        dialog.show()
+    }
+
+    private fun showDeleteActionDialog(action: Action) {
+        val dialog = dialogCreator.create(R.string.action_delete_title,
+            R.string.action_delete_message,
+            true, R.string.dialog_ok, {
+                mainViewModel.delete(action)
+            },
+            R.string.dialog_cancel, {})
+        dialog.show()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

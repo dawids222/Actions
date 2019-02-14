@@ -9,7 +9,6 @@ import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.DatePicker
 import kotlinx.android.synthetic.main.activity_action.*
 import kotlinx.android.synthetic.main.content_action.*
 import pl.grajek.actions.R
@@ -70,13 +69,13 @@ class ActionActivity : AppCompatActivity() {
 
     private fun handleDateInput() {
         val date = Date()
-        val datePickerDialog = DatePickerDialog(this, object : DatePickerDialog.OnDateSetListener {
-            override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        val datePickerDialog = DatePickerDialog(this,
+            DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
                 val formattedDate = "$dayOfMonth/$month/$year"
                 dateInput.setText(formattedDate)
                 amountInput.requestFocus()
-            }
-        }, date.year, date.month, date.day)
+            }, date.year, date.month, date.day
+        )
         datePickerDialog.show()
     }
 

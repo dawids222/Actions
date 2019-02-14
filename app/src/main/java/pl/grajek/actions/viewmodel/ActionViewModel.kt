@@ -17,7 +17,7 @@ class ActionViewModel(application: Application) : AndroidViewModel(application) 
     val date = MutableLiveData<String>()
     val amount = MutableLiveData<String>()
     var categoryId = -1L
-    var modifyAction: Action? = null
+    private var modifyAction: Action? = null
 
     val errorMessage = SingleLiveEvent<Int>()
     val goBack = SingleLiveEvent<Boolean>()
