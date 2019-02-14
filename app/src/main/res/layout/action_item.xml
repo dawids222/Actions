@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.circularreveal.cardview.CircularRevealCardView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/standard_padding"
         android:layout_marginLeft="@dimen/standard_padding"
@@ -10,7 +11,8 @@
     <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/standard_padding">
+            android:padding="@dimen/standard_padding"
+            android:background="?android:attr/selectableItemBackground">
 
         <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/dateView"
