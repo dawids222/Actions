@@ -25,4 +25,6 @@
     <string name="dialog_cancel">CANCEL</string>
     <string name="action_delete_title">Deleting action</string>
     <string name="action_delete_message">Selected Action will be removed permanently</string>
+    <string name="category_activity_title">Category</string>
+    <string name="action_activity_title">Action</string>
 </resources>

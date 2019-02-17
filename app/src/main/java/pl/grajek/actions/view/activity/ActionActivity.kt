@@ -31,6 +31,8 @@ class ActionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil.setContentView<ActivityActionBinding>(this, R.layout.activity_action)
 
+        title = getString(R.string.action_activity_title)
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         fab.setOnClickListener { view ->
@@ -69,7 +71,8 @@ class ActionActivity : AppCompatActivity() {
 
     private fun handleDateInput() {
         val date = Date()
-        val datePickerDialog = DatePickerDialog(this,
+        val datePickerDialog = DatePickerDialog(
+            this,
             DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
                 val formattedDate = "$dayOfMonth/$month/$year"
                 dateInput.setText(formattedDate)
