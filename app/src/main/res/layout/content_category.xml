@@ -22,13 +22,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/category_name_hint"
-                android:text="@={vm.name}"/>
+                android:text="@={vm.name}"
+                android:singleLine="true"/>
 
         <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/category_unit_hint"
-                android:text="@={vm.unit}"/>
+                android:text="@={vm.unit}"
+                android:singleLine="true"/>
 
     </android.support.v7.widget.LinearLayoutCompat>
 </layout>
