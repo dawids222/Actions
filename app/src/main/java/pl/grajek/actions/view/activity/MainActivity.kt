@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         })
 
         mainViewModel.errorMessage.observe(this, Observer {
-            val snackbar = Snackbar.make(drawer_layout, it!!, Snackbar.LENGTH_SHORT)
+            val snackbar = Snackbar.make(mainLayout, it!!, Snackbar.LENGTH_SHORT)
             val snackbarView = snackbar.view
             snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorError))
             snackbar.show()
