@@ -18,6 +18,7 @@ class ActionViewModel(application: Application) : AndroidViewModel(application) 
     val amount = MutableLiveData<String>()
     var categoryId = -1L
     private var modifyAction: Action? = null
+    var actions: Array<Action>? = null
 
     val errorMessage = SingleLiveEvent<Int>()
     val goBack = SingleLiveEvent<Boolean>()
@@ -25,6 +26,7 @@ class ActionViewModel(application: Application) : AndroidViewModel(application) 
 
     fun insert(action: Action) = actionRepository.insert(action)
     fun update(action: Action) = actionRepository.update(action)
+    fun delete(action: Action) = actionRepository.delete(action)
 
 
     fun setActionToModify(action: Action) {
@@ -38,10 +40,13 @@ class ActionViewModel(application: Application) : AndroidViewModel(application) 
             val date = this.date.value!!
             val amount = this.amount.value?.toDouble()!!
 
-            if (modifyAction != null)
-                modifyAction(date, amount)
-            else
-                addNewAction(date, amount)
+            val sameDateAction = getSameDateAction(date)
+
+            when {
+                sameDateAction != null -> modifySameDateAction(sameDateAction, amount)
+                modifyAction != null -> modifyAction(date, amount)
+                else -> addNewAction(date, amount)
+            }
 
             goBack.value = true
         } else {
@@ -57,6 +62,18 @@ class ActionViewModel(application: Application) : AndroidViewModel(application) 
             (date.isNotEmpty() && amount != 0.0)
         else
             false
+    }
+
+    private fun getSameDateAction(date: String): Action? {
+        return actions?.find {
+            it.date == Date(dateToMilliseconds(date)) && it != modifyAction
+        }
+    }
+
+    private fun modifySameDateAction(action: Action, amount: Double) {
+        action.quantity += amount
+        update(action)
+        modifyAction?.let { delete(it) }
     }
 
     private fun modifyAction(date: String, amount: Double) {

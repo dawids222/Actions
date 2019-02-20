@@ -23,6 +23,7 @@ class ActionActivity : AppCompatActivity() {
     companion object {
         const val CATEGORY_ID = "CATEGORY_ID"
         const val ACTION = "ACTION"
+        const val ACTIONS = "ACTIONS"
     }
 
     private lateinit var actionViewModel: ActionViewModel
@@ -35,11 +36,6 @@ class ActionActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
-
         actionViewModel = ViewModelProviders.of(this).get(ActionViewModel::class.java)
         binding.vm = actionViewModel
 
@@ -49,6 +45,11 @@ class ActionActivity : AppCompatActivity() {
     }
 
     private fun handleBundle() {
+        if (intent.hasExtra(ACTIONS)) {
+            val actions = intent.getSerializableExtra(ACTIONS) as Array<Action>?
+            actionViewModel.actions = actions
+        }
+
         if (intent.hasExtra(CATEGORY_ID)) { // Handle add action
             val categoryId = intent.getLongExtra(CATEGORY_ID, -1)
             actionViewModel.categoryId = categoryId

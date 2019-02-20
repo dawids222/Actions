@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         actionsRecycler.layoutManager = layoutManager
 
         adapter = ActionAdapter({
-            mainViewModel.gotoActionEditActivity(it)
+            mainViewModel.gotoActionActivity(it)
         }, {
             showDeleteActionDialog(it)
         })

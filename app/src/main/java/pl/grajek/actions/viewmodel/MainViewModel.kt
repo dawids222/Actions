@@ -45,19 +45,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         )
     }
 
-    fun gotoActionActivity() {
+    fun gotoActionActivity(action: Action? = null) {
         val bundle = Bundle()
-        if (currentCategory != null)
-            bundle.putLong(ActionActivity.CATEGORY_ID, currentCategory!!.id!!)
-        activityToStart.value = ActivityStartModel(
-            ActionActivity::class.java, bundle
-        )
-    }
-
-    fun gotoActionEditActivity(action: Action) {
-        val bundle = Bundle()
-        if (currentCategory != null)
-            bundle.putSerializable(ActionActivity.ACTION, action)
+        bundle.putSerializable(ActionActivity.ACTIONS, currentActions?.value?.toTypedArray())
+        if (currentCategory != null) {
+            if (action != null) { // modyfikacja
+                bundle.putSerializable(ActionActivity.ACTION, action)
+            } else { // dodanie nowego
+                bundle.putLong(ActionActivity.CATEGORY_ID, currentCategory!!.id!!)
+            }
+        }
         activityToStart.value = ActivityStartModel(
             ActionActivity::class.java, bundle
         )
