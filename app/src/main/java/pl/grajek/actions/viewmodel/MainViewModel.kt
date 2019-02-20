@@ -23,7 +23,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val categoryRepository = CategoryRepository(application)
 
     val activityToStart = SingleLiveEvent<ActivityStartModel>()
+    var previousCategory: Category? = null
     var currentCategory: Category? = null
+        set(value) {
+            previousCategory = field
+            field = value
+        }
 
     val errorMessage = SingleLiveEvent<Int>()
 

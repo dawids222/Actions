@@ -13,6 +13,7 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
@@ -107,6 +108,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             tabs.removeAllTabs()
             createTabs(categories)
+            selectTab(mainViewModel.previousCategory)
             manageFabVisibility(categories)
         })
 
@@ -126,6 +128,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 tab.tag = category
             }
             tabs.addTab(newTab)
+        }
+    }
+
+    private fun selectTab(category: Category?) {
+        category?.let {
+            for (i in 0 until tabs.tabCount) {
+                val tab = tabs.getTabAt(i)
+                val cat = tab?.tag as Category
+                if (cat == it) {
+                    Log.e("xD", cat.toString())
+                    Log.e("xDD", it.toString())
+                    tab.select()
+                    return
+                }
+            }
         }
     }
 
