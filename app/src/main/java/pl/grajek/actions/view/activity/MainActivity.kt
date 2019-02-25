@@ -20,8 +20,11 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import pl.grajek.actions.R
 import pl.grajek.actions.databinding.ActivityMainBinding
+import pl.grajek.actions.model.OnSwipeTouchListener
 import pl.grajek.actions.model.entity.Action
 import pl.grajek.actions.model.entity.Category
+import pl.grajek.actions.util.next
+import pl.grajek.actions.util.previous
 import pl.grajek.actions.view.adapter.ActionAdapter
 import pl.grajek.actions.view.dialog.DialogCreator
 import pl.grajek.actions.viewmodel.MainViewModel
@@ -90,6 +93,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         fab.setOnClickListener {
             mainViewModel.gotoActionActivity()
         }
+
+        actionsRecycler.setOnTouchListener(object : OnSwipeTouchListener(this@MainActivity) {
+            override fun onSwipeRight() {
+                tabs.previous()
+            }
+
+            override fun onSwipeLeft() {
+                tabs.next()
+            }
+        })
     }
 
     private fun setObservers() {
