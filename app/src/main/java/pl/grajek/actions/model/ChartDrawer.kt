@@ -30,6 +30,7 @@ class ChartDrawer(
         chart.animateX(1000)
         chart.axisRight.isEnabled = false
         chart.legend.isEnabled = false
+        chart.setExtraOffsets(10f, 10f, 30f, 10f)
     }
 
     fun draw(actions: MutableList<Action>) {
