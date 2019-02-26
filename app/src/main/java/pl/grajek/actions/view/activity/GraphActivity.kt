@@ -5,6 +5,8 @@ import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.Menu
+import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_graph.*
 import pl.grajek.actions.R
 import pl.grajek.actions.databinding.ActivityGraphBinding
@@ -55,9 +57,26 @@ class GraphActivity : AppCompatActivity() {
         })
     }
 
+    private fun zoomOut() {
+        chart.fitScreen()
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.graph, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.zoom_out -> zoomOut()
+            else -> return super.onOptionsItemSelected(item)
+        }
+
+        return true
+    }
 }
