@@ -17,7 +17,7 @@
     <string name="placeholder">placeholder</string>
     <string name="modify_category_action">Modify category</string>
     <string name="show_graph">Show graph</string>
-    <string name="category_null_or_empty">Category is not selected or empty</string>
+    <string name="category_null_or_too_few">Category is not selected or has less then 2 actions</string>
     <string name="title_activity_graph">GraphActivity</string>
     <string name="category_delete_title">Deleting category</string>
     <string name="category_delete_message">Selected category will be removed permanently</string>

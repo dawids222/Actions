@@ -66,14 +66,15 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun gotoGraphActivity() {
-        if (currentCategory != null && currentActions?.value?.isNotEmpty() == true) {
+        val currentActions = this.currentActions?.value
+        if (currentCategory != null && currentActions != null && currentActions.count() >= 2) {
             val bundle = Bundle()
             bundle.putSerializable(GraphActivity.CATEGORY, currentCategory)
             activityToStart.value = ActivityStartModel(
                 GraphActivity::class.java, bundle
             )
         } else {
-            errorMessage.value = R.string.category_null_or_empty
+            errorMessage.value = R.string.category_null_or_too_few
         }
     }
 
