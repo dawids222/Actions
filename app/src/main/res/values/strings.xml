@@ -28,4 +28,7 @@
     <string name="category_activity_title">Category</string>
     <string name="action_activity_title">Action</string>
     <string name="zoom_out">Zoom out</string>
+    <string name="save_graph">Save graph</string>
+    <string name="external_storage_access_denied">Storage access is required</string>
+    <string name="picture_save_success">Picture saved successfully</string>
 </resources>

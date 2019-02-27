@@ -6,4 +6,11 @@
             android:title="@string/zoom_out"
             android:orderInCategory="100"
             app:showAsAction="ifRoom"/>
+
+    <item
+            android:id="@+id/save_graph"
+            android:icon="@drawable/ic_camera_white_24dp"
+            android:title="@string/save_graph"
+            android:orderInCategory="100"
+            app:showAsAction="ifRoom"/>
 </menu>

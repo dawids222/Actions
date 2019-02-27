@@ -1,17 +1,28 @@
 package pl.grajek.actions.view.activity
 
+import android.Manifest
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.design.widget.Snackbar
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.single.PermissionListener
 import kotlinx.android.synthetic.main.activity_graph.*
 import pl.grajek.actions.R
 import pl.grajek.actions.databinding.ActivityGraphBinding
 import pl.grajek.actions.model.ChartDrawer
+import pl.grajek.actions.model.PictureManager
 import pl.grajek.actions.model.entity.Category
+import pl.grajek.actions.view.animator.FadeAnimator
 import pl.grajek.actions.viewmodel.GraphViewModel
 
 
@@ -24,6 +35,9 @@ class GraphActivity : AppCompatActivity() {
     private lateinit var graphViewModel: GraphViewModel
     private lateinit var chartDrawer: ChartDrawer
     private lateinit var category: Category
+
+    private val pictureManager = PictureManager()
+    private val fadeAnimator = FadeAnimator()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +75,47 @@ class GraphActivity : AppCompatActivity() {
         chart.fitScreen()
     }
 
+    private fun saveGraph() {
+        Dexter
+            .withActivity(this)
+            .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            .withListener(getPermissionListener())
+            .check()
+    }
+
+    private fun getPermissionListener(): PermissionListener {
+        return object : PermissionListener {
+            override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+                fadeAnimator
+                    .setOnEndListener {
+                        val snackbar =
+                            Snackbar.make(graphLayout, R.string.picture_save_success, Snackbar.LENGTH_SHORT)
+                        val view = snackbar.view
+                        view.setBackgroundColor(ContextCompat.getColor(this@GraphActivity, R.color.colorSuccess))
+                        snackbar.show()
+                    }
+                    .animate(flashLayout, 2000)
+                val bitmap = pictureManager.getBitmap(chart)
+                pictureManager.save(this@GraphActivity, bitmap)
+            }
+
+            override fun onPermissionRationaleShouldBeShown(
+                permission: PermissionRequest?,
+                token: PermissionToken?
+            ) {
+                token?.continuePermissionRequest()
+            }
+
+            override fun onPermissionDenied(response: PermissionDeniedResponse?) {
+                val snackbar =
+                    Snackbar.make(graphLayout, R.string.external_storage_access_denied, Snackbar.LENGTH_SHORT)
+                val view = snackbar.view
+                view.setBackgroundColor(ContextCompat.getColor(this@GraphActivity, R.color.colorError))
+                snackbar.show()
+            }
+        }
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
@@ -74,6 +129,7 @@ class GraphActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.zoom_out -> zoomOut()
+            R.id.save_graph -> saveGraph()
             else -> return super.onOptionsItemSelected(item)
         }
 
