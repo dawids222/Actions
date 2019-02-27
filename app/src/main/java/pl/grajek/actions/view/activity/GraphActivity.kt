@@ -5,7 +5,6 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
@@ -21,6 +20,7 @@ import pl.grajek.actions.R
 import pl.grajek.actions.databinding.ActivityGraphBinding
 import pl.grajek.actions.model.ChartDrawer
 import pl.grajek.actions.model.PictureManager
+import pl.grajek.actions.model.SnackbarProvider
 import pl.grajek.actions.model.entity.Category
 import pl.grajek.actions.view.animator.FadeAnimator
 import pl.grajek.actions.viewmodel.GraphViewModel
@@ -38,6 +38,7 @@ class GraphActivity : AppCompatActivity() {
 
     private val pictureManager = PictureManager()
     private val fadeAnimator = FadeAnimator()
+    private val snackbarProvider = SnackbarProvider()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,14 +88,9 @@ class GraphActivity : AppCompatActivity() {
         return object : PermissionListener {
             override fun onPermissionGranted(response: PermissionGrantedResponse?) {
                 fadeAnimator
-                    .setOnEndListener {
-                        val snackbar =
-                            Snackbar.make(graphLayout, R.string.picture_save_success, Snackbar.LENGTH_SHORT)
-                        val view = snackbar.view
-                        view.setBackgroundColor(ContextCompat.getColor(this@GraphActivity, R.color.colorSuccess))
-                        snackbar.show()
-                    }
+                    .setOnEndListener { showSuccessSnackbar() }
                     .animate(flashLayout, 2000)
+
                 val bitmap = pictureManager.getBitmap(chart)
                 pictureManager.save(this@GraphActivity, bitmap)
             }
@@ -107,13 +103,25 @@ class GraphActivity : AppCompatActivity() {
             }
 
             override fun onPermissionDenied(response: PermissionDeniedResponse?) {
-                val snackbar =
-                    Snackbar.make(graphLayout, R.string.external_storage_access_denied, Snackbar.LENGTH_SHORT)
-                val view = snackbar.view
-                view.setBackgroundColor(ContextCompat.getColor(this@GraphActivity, R.color.colorError))
-                snackbar.show()
+                showPermissionDeniedSnackbar()
             }
         }
+    }
+
+    private fun showSuccessSnackbar() {
+        snackbarProvider.create(
+            graphLayout,
+            R.string.picture_save_success, true,
+            ContextCompat.getColor(this@GraphActivity, R.color.colorSuccess)
+        ).show()
+    }
+
+    private fun showPermissionDeniedSnackbar() {
+        snackbarProvider.create(
+            graphLayout,
+            R.string.external_storage_access_denied, true,
+            ContextCompat.getColor(this@GraphActivity, R.color.colorError)
+        ).show()
     }
 
     override fun onSupportNavigateUp(): Boolean {
