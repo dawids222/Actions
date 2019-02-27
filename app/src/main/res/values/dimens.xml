@@ -7,4 +7,6 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="standard_padding">8dp</dimen>
+
+    <dimen name="input_layout_background_height">200sp</dimen>
 </resources>
