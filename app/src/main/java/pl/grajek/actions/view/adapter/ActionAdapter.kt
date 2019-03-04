@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import pl.grajek.actions.R
 import pl.grajek.actions.model.Date
 import pl.grajek.actions.model.entity.Action
+import pl.grajek.actions.model.entity.Category
 import pl.grajek.actions.view.holder.ActionViewHolder
 
 class ActionAdapter(
@@ -14,10 +15,15 @@ class ActionAdapter(
 ) : RecyclerView.Adapter<ActionViewHolder>() {
 
     private var actions = mutableListOf<Action>()
+    private var category = Category()
     private var recyclerView: RecyclerView? = null
 
-    fun setActions(actions: MutableList<Action>) {
+    fun setActions(
+        actions: MutableList<Action>,
+        category: Category
+    ) {
         this.actions = actions
+        this.category = category
         notifyDataSetChanged()
         recyclerView?.scheduleLayoutAnimation()
     }
@@ -37,6 +43,7 @@ class ActionAdapter(
         val action = actions[position]
         holder.dateTextView.text = Date(action.date.time).stringify
         holder.amountTextView.text = action.quantity.toString()
+        holder.unitTextView.text = " ${category.unit}"
         holder.tag = action
         holder.setOnClickListener(onItemClick)
         holder.removeButton.setOnClickListener {

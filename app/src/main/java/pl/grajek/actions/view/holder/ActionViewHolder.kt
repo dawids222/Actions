@@ -11,6 +11,7 @@ class ActionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     val dateTextView: AppCompatTextView = view.findViewById(R.id.dateView)
     val amountTextView: AppCompatTextView = view.findViewById(R.id.amountView)
+    val unitTextView: AppCompatTextView = view.findViewById(R.id.unitView)
     val removeButton: AppCompatImageButton = view.findViewById(R.id.removeButton)
 
     var tag: Action? = null

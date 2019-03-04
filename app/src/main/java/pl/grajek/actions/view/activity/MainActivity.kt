@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     this@MainActivity,
                     currentCategory.id!!,
                     Observer {
-                        adapter.setActions(it!!)
+                        adapter.setActions(it!!, currentCategory)
                     })
             }
 

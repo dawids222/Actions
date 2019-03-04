@@ -63,7 +63,7 @@ class GraphActivity : AppCompatActivity() {
     }
 
     private fun setTitle() {
-        title = category.name
+        title = "${category.name} [${category.unit}]"
     }
 
     private fun setObservers() {
