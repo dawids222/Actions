@@ -41,4 +41,8 @@
     <string name="notifications_enabled">Notifications enabled</string>
     <string name="nav_notifications">Notifications</string>
     <string name="notifications_activity_title">Notifications settings</string>
+    <string name="nav_about">About</string>
+    <string name="about_activity_title">About</string>
+    <string name="about_description">
+        <![CDATA[# Actions<br/><br/>An application for monitoring daily contribution to certain activities. The main purpose is to measure progress in chosen areas of life. For example, if you are a smoker and want to quit, that could be a way to control yourself. You can input how many cigarettes you smoke every day for some time and then check on a graph how it goes.<br/><br/>Application capabilities:<br/><br/>* Creating categories (eg. smoking, riding a bike, learning, etc..)<br/>* Logging daily contribution to a category (eg. on 21/12/2019 2h of learning)<br/>* Visualization (every category can be shown on a graph)<br/>* Save Graph (graph can be saved as a photo in a gallery)<br/>* Notifications (user can set up notifications not to forget about logging daily contribution)<br/><br/>Actions is a fun, non commercial project, done mostly for myself.<br/><br/>Things I learned during this project:<br/><br/>* Room Persistence Library<br/>* Lifecycle Library<br/>* Android MVVM architecture (data binding, etc..)<br/>* Notifications<br/>* Material design<br/>* Dexter (permissions management library)(Uber useful)<br/>* MPAndroidChart (chart library)\"]]></string>
 </resources>

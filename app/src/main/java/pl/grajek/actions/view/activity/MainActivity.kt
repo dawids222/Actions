@@ -231,6 +231,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 mainViewModel.activityToStart.value =
                     ActivityStartModel(NotificationActivity::class.java, Bundle())
             }
+            R.id.nav_about -> {
+                mainViewModel.activityToStart.value =
+                    ActivityStartModel(AboutActivity::class.java, Bundle())
+            }
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)

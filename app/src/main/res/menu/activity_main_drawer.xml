@@ -10,6 +10,11 @@
                 android:icon="@drawable/ic_notifications_black_24dp"
                 android:title="@string/nav_notifications"/>
 
+        <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_info_outline_black_24dp"
+                android:title="@string/nav_about"/>
+
     </group>
 
 </menu>
