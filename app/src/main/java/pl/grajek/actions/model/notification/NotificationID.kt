@@ -1,4 +1,4 @@
-package pl.grajek.actions.model
+package pl.grajek.actions.model.notification
 
 import java.util.concurrent.atomic.AtomicInteger
 

@@ -1,4 +1,4 @@
-package pl.grajek.actions.model
+package pl.grajek.actions.model.notification
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -34,7 +34,10 @@ class NotificationManager {
         }
         val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
-        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+        val builder = NotificationCompat.Builder(
+            context,
+            CHANNEL_ID
+        )
             .setSmallIcon(icon)
             .setContentTitle(context.getString(title))
             .setContentText(context.getString(content))

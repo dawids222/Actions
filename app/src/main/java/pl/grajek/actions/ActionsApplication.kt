@@ -1,7 +1,7 @@
 package pl.grajek.actions
 
 import android.app.Application
-import pl.grajek.actions.model.NotificationManager
+import pl.grajek.actions.model.notification.NotificationManager
 
 class ActionsApplication : Application() {
 

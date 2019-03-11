@@ -59,7 +59,7 @@ class ActionViewModel(application: Application) : AndroidViewModel(application) 
         val amount = this.amount.value?.toDouble()
 
         return if (date != null && amount != null)
-            (date.isNotEmpty() && amount != 0.0)
+            date.isNotEmpty()
         else
             false
     }

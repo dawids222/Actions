@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.content_main.*
 import pl.grajek.actions.R
 import pl.grajek.actions.databinding.ActivityMainBinding
 import pl.grajek.actions.model.OnSwipeTouchListener
+import pl.grajek.actions.model.dto.ActivityStartModel
 import pl.grajek.actions.model.entity.Action
 import pl.grajek.actions.model.entity.Category
 import pl.grajek.actions.util.next
@@ -227,7 +228,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_camera -> {
-                // Handle the camera action
+                mainViewModel.activityToStart.value =
+                    ActivityStartModel(NotificationActivity::class.java, Bundle())
             }
             R.id.nav_gallery -> {
 
