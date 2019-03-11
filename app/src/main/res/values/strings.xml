@@ -40,4 +40,5 @@
     <string name="notification_set">Notifications are now enabled</string>
     <string name="notifications_enabled">Notifications enabled</string>
     <string name="nav_notifications">Notifications</string>
+    <string name="notifications_activity_title">Notifications settings</string>
 </resources>
