@@ -35,4 +35,7 @@
     <string name="reminderContent">Remember to update your actions today</string>
     <string name="title_activity_notification">NotificationActivity</string>
     <string name="time_hint">time</string>
+    <string name="interval_hint">interval</string>
+    <string name="notification_disabled">Notifications are now disabled</string>
+    <string name="notification_set">Notifications are now enabled</string>
 </resources>

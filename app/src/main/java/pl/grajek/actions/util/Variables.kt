@@ -3,7 +3,7 @@ package pl.grajek.actions.util
 import java.text.SimpleDateFormat
 
 val sdf = SimpleDateFormat("dd/MM/yyyy")
-
+val hdf = SimpleDateFormat("dd/MM/yyyy HH:mm")
 val pdf = SimpleDateFormat("yyyyMMdd_HHmmss")
 
 const val APPLICATION_DIRECTORY = "Actions"

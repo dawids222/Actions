@@ -1,5 +1,6 @@
 package pl.grajek.actions.util
 
+import android.content.SharedPreferences
 import android.support.design.widget.TabLayout
 import java.util.*
 
@@ -21,4 +22,10 @@ fun Date.now(): Date {
 fun Date.add(milliseconds: Long): Date {
     val time = this.time + milliseconds
     return Date(time)
+}
+
+fun SharedPreferences.edit(callback: (SharedPreferences.Editor) -> Unit) {
+    val editor = this.edit()
+    callback(editor)
+    editor.apply()
 }

@@ -5,10 +5,13 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_notification.*
 import kotlinx.android.synthetic.main.content_notification.*
 import pl.grajek.actions.R
 import pl.grajek.actions.databinding.ActivityNotificationBinding
+import pl.grajek.actions.model.SnackbarProvider
 import pl.grajek.actions.util.format
 import pl.grajek.actions.viewmodel.NotificationViewModel
 
@@ -17,6 +20,7 @@ class NotificationActivity : AppCompatActivity() {
 
     private lateinit var notificationViewModel: NotificationViewModel
     private val timeListener = getTimeListener()
+    private val snackbarProvider = SnackbarProvider()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,10 +59,20 @@ class NotificationActivity : AppCompatActivity() {
             val enabled = it ?: false
             enableViews(enabled)
         })
+
+        notificationViewModel.snackbarModel.observe(this, Observer { snackbarModel ->
+            snackbarModel?.let {
+                snackbarProvider.create(
+                    notificationRootLayout, it.message, it.short,
+                    ContextCompat.getColor(this, it.color)
+                ).show()
+            }
+        })
     }
 
     private fun enableViews(enabled: Boolean) {
         timeInput.isEnabled = enabled
+        intervalInput.isEnabled = enabled
     }
 
     private fun getTimeListener(): TimePickerDialog.OnTimeSetListener {

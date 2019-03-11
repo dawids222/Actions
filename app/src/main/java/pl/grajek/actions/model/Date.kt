@@ -1,5 +1,6 @@
 package pl.grajek.actions.model
 
+import pl.grajek.actions.util.hdf
 import pl.grajek.actions.util.sdf
 import java.util.Date
 
@@ -21,4 +22,12 @@ class Date(milliseconds: Long) {
     }
 
     constructor() : this(System.currentTimeMillis())
+
+    companion object {
+        fun parseFromTime(time: String): Date {
+            val date = pl.grajek.actions.model.Date()
+            val timeString = "${date.day}/${date.month + 1}/${date.year} $time"
+            return hdf.parse(timeString)
+        }
+    }
 }
