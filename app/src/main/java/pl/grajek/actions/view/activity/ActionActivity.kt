@@ -75,7 +75,7 @@ class ActionActivity : AppCompatActivity() {
         val datePickerDialog = DatePickerDialog(
             this,
             DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-                val formattedDate = "$dayOfMonth/$month/$year"
+                val formattedDate = "$dayOfMonth/${month+1}/$year"
                 dateInput.setText(formattedDate)
                 amountInput.requestFocus()
             }, date.year, date.month, date.day

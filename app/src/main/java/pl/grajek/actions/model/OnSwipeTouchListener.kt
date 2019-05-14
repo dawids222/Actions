@@ -15,13 +15,7 @@ open class OnSwipeTouchListener(ctx: Context) : View.OnTouchListener {
     }
 
     private inner class GestureListener : SimpleOnGestureListener() {
-
-        override fun onDown(e: MotionEvent): Boolean {
-            return true
-        }
-
         override fun onFling(e1: MotionEvent?, e2: MotionEvent?, velocityX: Float, velocityY: Float): Boolean {
-            var result = false
             try {
                 val diffY = e2!!.y - e1!!.y
                 val diffX = e2.x - e1.x
@@ -32,7 +26,6 @@ open class OnSwipeTouchListener(ctx: Context) : View.OnTouchListener {
                         } else {
                             onSwipeLeft()
                         }
-                        result = true
                     }
                 } else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
                     if (diffY > 0) {
@@ -40,13 +33,12 @@ open class OnSwipeTouchListener(ctx: Context) : View.OnTouchListener {
                     } else {
                         onSwipeTop()
                     }
-                    result = true
                 }
             } catch (exception: Exception) {
                 exception.printStackTrace()
             }
 
-            return result
+            return super.onFling(e1, e2, velocityX, velocityY)
         }
     }
 
