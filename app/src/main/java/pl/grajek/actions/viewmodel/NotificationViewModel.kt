@@ -38,11 +38,11 @@ class NotificationViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun confirm() {
-        if (isEnabled.value == false) {
+        saveViewState()
+        if (isEnabled.value == false)
             disableNotifications()
-        } else {
+        else
             setNotifications()
-        }
     }
 
     private fun disableNotifications() {
@@ -54,7 +54,6 @@ class NotificationViewModel(application: Application) : AndroidViewModel(applica
         val startDate = Date.parseFromTime(time.value!!)
         val interval = this.interval.value?.toLong()?.times(HOUR) ?: 24 * HOUR
         notificationScheduler.scheduleReminderNotifications(startDate, interval)
-        saveViewState()
         setSnackbar(R.string.notification_set, R.color.colorSuccess)
     }
 
