@@ -53,7 +53,8 @@ class NotificationActivity : AppCompatActivity() {
     }
 
     private fun showTimePicker() {
-        TimePickerDialog(this, timeListener, 0, 0, true).show()
+        val time = notificationViewModel.timeDetails()
+        TimePickerDialog(this, timeListener, time.hours, time.minutes, true).show()
     }
 
     private fun setObservers() {

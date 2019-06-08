@@ -60,4 +60,13 @@ class NotificationViewModel(application: Application) : AndroidViewModel(applica
     private fun setSnackbar(message: Int, color: Int) {
         snackbarModel.value = SnackbarModel(message, color)
     }
+
+    class TimeDetails(val hours: Int, val minutes: Int)
+
+    fun timeDetails(): TimeDetails {
+        val time = time.value!!
+        val hours = time.substring(0, 2).toInt()
+        val minutes = time.substring(3, 5).toInt()
+        return TimeDetails(hours, minutes)
+    }
 }
