@@ -116,13 +116,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         })
 
         mainViewModel.selectCategories().observe(this, Observer { categories ->
-            if (categories?.isEmpty() == true)
-                mainViewModel.currentCategory = null
+            categories?.let {
+                if (it.isEmpty())
+                    mainViewModel.currentCategory = null
 
-            tabs.removeAllTabs()
-            createTabs(categories)
-            selectTab(mainViewModel.previousCategory)
-            manageFabVisibility(categories)
+                val tabsCount = tabs.tabCount
+                tabs.removeAllTabs()
+                createTabs(categories)
+                if (it.isNotEmpty()) {
+                    when {
+                        tabsCount == 0 -> selectTab(it.first()) //Dodano pierwszy element LUB dopiero otworzono aplikację
+                        tabsCount < it.count() -> selectTab(it.last()) //Dodano kolejny element
+                    }
+                }
+                manageFabVisibility(categories)
+            }
         })
 
         mainViewModel.errorMessage.observe(this, Observer {
