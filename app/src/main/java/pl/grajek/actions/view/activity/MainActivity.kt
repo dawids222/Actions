@@ -20,7 +20,8 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import pl.grajek.actions.R
 import pl.grajek.actions.databinding.ActivityMainBinding
-import pl.grajek.actions.model.OnSwipeTouchListener
+import pl.grajek.actions.listener.OnSwipeTouchListener
+import pl.grajek.actions.listener.VisibilityScrollListener
 import pl.grajek.actions.model.dto.ActivityStartModel
 import pl.grajek.actions.model.entity.Action
 import pl.grajek.actions.model.entity.Category
@@ -104,6 +105,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 tabs.next()
             }
         })
+
+        actionsRecycler.addOnScrollListener(
+            VisibilityScrollListener(onShow = {
+                fab.show()
+                supportActionBar?.show()
+            }, onHide = {
+                fab.hide()
+                supportActionBar?.hide()
+            }
+            ))
     }
 
     private fun setObservers() {
